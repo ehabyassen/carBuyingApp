@@ -1,6 +1,6 @@
-Car Buying App – Spring Boot MVP
+🚗 Car Buying App – Spring Boot MVP
 
-A minimal backend service for managing customer car-buying requests and supplier offers, built with Spring Boot, H2, JPA, Flyway, and MapStruct.
+A lightweight backend service for managing customer car-buying requests and supplier offers, built with Spring Boot, H2, Flyway, JPA, and MapStruct.
 
 🚀 Quick Start
 Requirements
@@ -26,33 +26,42 @@ Customer Requests
 
 Base Path: /api/requests
 
-Create a Request
+➤ Create a Request
 POST /api/requests
-Body:
+
+
+Body
+
 {
 "customerId": 101,
 "description": "Looking for Corolla 2018",
 "checkedByCompany": "Auto Check Co"
 }
 
-List Requests (filter by status + pagination)
+➤ List Requests (filter by status + pagination)
 GET /api/requests?status=ACTIVE&page=0&size=10
 
-Update Request Status
+➤ Update Request Status
 PUT /api/requests
-Body:
+
+
+Body
+
 {
 "requestId": 1,
-"status": "Closed"
+"status": "CLOSED"
 }
 
 Supplier Offers
 
 Base Path: /api/offers
 
-Submit Offer
+➤ Submit Offer
 POST /api/offers
-Body:
+
+
+Body
+
 {
 "supplierId": 200,
 "requestId": 1,
@@ -60,28 +69,30 @@ Body:
 "carDetails": "Good condition, 80k km"
 }
 
-List Offers by Request
+➤ List Offers by Request
 GET /api/offers/by-request/1
 
-List Offers by Supplier
+➤ List Offers by Supplier
 GET /api/offers/by-supplier/200
 
 🗄️ Database & Migrations
-Flyway scripts automatically run from:
+
+Flyway migration scripts are located in:
+
 src/main/resources/db/migration/
 
 
-V1__create_car_buying_app_tables.sql → Schema + indexes
+V1__create_car_buying_app_tables.sql – schema & indexes
 
-V2__seed_data.sql → Demo data
+V2__seed_data.sql – demo data
 
-⚙️ Configuration (application.properties)
+⚙️ Configuration Overview (application.properties)
 
-H2 in-memory DB
+H2 in-memory database
 
-Flyway enabled
+Flyway schema migrations enabled
 
-Hibernate DDL disabled (ddl-auto=none)
+Hibernate auto-DDL disabled (ddl-auto=none)
 
 SQL logging enabled
 
@@ -91,19 +102,19 @@ Spring Boot 3.x
 
 H2 Database
 
-Flyway Migrations
+Flyway
 
 Spring Data JPA
 
-MapStruct DTO Mappers
+MapStruct
 
 Java 17
 
-📁 Project Structure (Key Folders)
+📁 Project Structure
 controller/
 service/
 repository/
 model/
 dto/
 mapper/
-adapter/   # inspection adapters
+adapter/      # Inspection adapters
