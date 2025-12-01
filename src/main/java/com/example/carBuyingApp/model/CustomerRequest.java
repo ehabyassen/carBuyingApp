@@ -27,6 +27,7 @@ public class CustomerRequest {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private RequestStatus status = RequestStatus.ACTIVE;
 
     @Column(columnDefinition = "TEXT")
@@ -42,6 +43,7 @@ public class CustomerRequest {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @Builder.Default
     private List<SupplierOffer> offers = new ArrayList<>();
 
     @Column(nullable = false, updatable = false)

@@ -39,7 +39,7 @@ Body
 }
 
 ➤ List Requests (filter by status + pagination)
-GET /api/requests?status=ACTIVE&page=0&size=10
+GET /api/requests?status=Active&page=0&size=10
 
 ➤ Update Request Status
 PUT /api/requests
@@ -49,7 +49,7 @@ Body
 
 {
 "requestId": 1,
-"status": "CLOSED"
+"status": "Closed"
 }
 
 Supplier Offers

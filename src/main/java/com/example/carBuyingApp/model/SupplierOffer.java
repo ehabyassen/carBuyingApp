@@ -40,6 +40,7 @@ public class SupplierOffer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private OfferStatus status = OfferStatus.PENDING;
 
     @Column(columnDefinition = "TEXT")
