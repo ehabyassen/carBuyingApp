@@ -5,10 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CustomerRequestStatusUpdateDto {
-
-    @NotNull
-    private Long requestId;
+public class CustomerRequestUpdateDto {
 
     @NotNull
     private RequestStatus status;

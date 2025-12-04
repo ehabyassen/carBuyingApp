@@ -40,10 +40,10 @@ public class SupplierOfferServiceImpl implements SupplierOfferService {
             throw new OfferSubmissionNotAllowedException(requestId, requestStatus);
         }
         SupplierOffer supplierOffer = supplierOfferMapper.fromCreateDto(supplierOfferCreateDto);
+        supplierOffer.setCustomerRequest(customerRequest);
+        Integer inspectionScore = getInspectionScore(supplierOffer, customerRequest);
+        supplierOffer.setInspectionScore(inspectionScore);
         SupplierOffer savedSupplierOffer = supplierOfferRepository.save(supplierOffer);
-
-        triggerInspectionRequest(savedSupplierOffer, customerRequest);
-
         return supplierOfferMapper.toResponseDto(savedSupplierOffer);
     }
 
@@ -65,14 +65,12 @@ public class SupplierOfferServiceImpl implements SupplierOfferService {
                 .toList();
     }
 
-    private void triggerInspectionRequest(SupplierOffer supplierOffer, CustomerRequest customerRequest) {
+    private Integer getInspectionScore(SupplierOffer supplierOffer, CustomerRequest customerRequest) {
         InspectionCompany company = customerRequest.getCheckedByCompany();
         InspectionAdapter adapter = adapterFactory.getAdapter(company);
-
         if (adapter == null) {
             throw new InspectionAdapterNotFoundException(company.getDisplayName());
         }
-
-        adapter.sendInspectionRequest(supplierOffer.getId(), customerRequest.getId());
+        return adapter.getInspectionScore(supplierOffer);
     }
 }

@@ -2,6 +2,7 @@ package com.example.carBuyingApp.exception;
 
 import com.example.carBuyingApp.enums.RequestStatus;
 
+//is a business exception
 public class OfferSubmissionNotAllowedException extends RuntimeException {
 
     public OfferSubmissionNotAllowedException(Long requestId, RequestStatus status) {

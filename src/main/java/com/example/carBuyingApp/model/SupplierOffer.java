@@ -4,6 +4,7 @@ import com.example.carBuyingApp.enums.OfferStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +19,6 @@ import java.time.LocalDateTime;
 )
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplierOffer {
@@ -40,14 +40,13 @@ public class SupplierOffer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Builder.Default
     private OfferStatus status = OfferStatus.PENDING;
 
     @Column(columnDefinition = "TEXT")
     private String carDetails;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @Column
     private Integer inspectionScore; // 0–100 returned by adapter
@@ -55,6 +54,7 @@ public class SupplierOffer {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column
     private LocalDateTime updatedAt;
 
     @PrePersist

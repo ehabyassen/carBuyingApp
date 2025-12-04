@@ -2,7 +2,7 @@ package com.example.carBuyingApp.service;
 
 import com.example.carBuyingApp.dto.CustomerRequestCreateDto;
 import com.example.carBuyingApp.dto.CustomerRequestResponseDto;
-import com.example.carBuyingApp.dto.CustomerRequestStatusUpdateDto;
+import com.example.carBuyingApp.dto.CustomerRequestUpdateDto;
 import com.example.carBuyingApp.enums.RequestStatus;
 import com.example.carBuyingApp.exception.CustomerRequestNotFoundException;
 import com.example.carBuyingApp.mapper.CustomerRequestMapper;
@@ -32,18 +32,19 @@ public class CustomerRequestServiceImpl implements CustomerRequestService {
     }
 
     @Override
-    public Page<CustomerRequestResponseDto> getCustomerRequestsByStatus(RequestStatus status, int page, int size) {
+    public Page<CustomerRequestResponseDto> getCustomerRequestsByStatus(String status, int page, int size) {
+        RequestStatus requestStatus = RequestStatus.valueOf(status);
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<CustomerRequest> customerRequests = customerRequestRepository.findByStatus(status, pageable);
+        Page<CustomerRequest> customerRequests = customerRequestRepository.findByStatus(requestStatus, pageable);
         return customerRequestMapper.toDtoPage(customerRequests);
     }
 
     @Override
-    public CustomerRequestResponseDto updateCustomerRequestStatus(CustomerRequestStatusUpdateDto customerRequestStatusUpdateDto) {
-        Long requestId = customerRequestStatusUpdateDto.getRequestId();
+    public CustomerRequestResponseDto updateCustomerRequestStatus(Long requestId,
+                                                                  CustomerRequestUpdateDto customerRequestUpdateDto) {
         CustomerRequest customerRequest = customerRequestRepository.findById(requestId)
                 .orElseThrow(() -> new CustomerRequestNotFoundException(requestId));
-        customerRequest.setStatus(customerRequestStatusUpdateDto.getStatus());
+        customerRequest.setStatus(customerRequestUpdateDto.getStatus());
         CustomerRequest updatedCustomerRequest = customerRequestRepository.save(customerRequest);
         return customerRequestMapper.toResponseDto(updatedCustomerRequest);
     }

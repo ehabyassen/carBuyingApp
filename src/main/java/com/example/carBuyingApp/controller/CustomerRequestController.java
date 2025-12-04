@@ -2,8 +2,7 @@ package com.example.carBuyingApp.controller;
 
 import com.example.carBuyingApp.dto.CustomerRequestCreateDto;
 import com.example.carBuyingApp.dto.CustomerRequestResponseDto;
-import com.example.carBuyingApp.dto.CustomerRequestStatusUpdateDto;
-import com.example.carBuyingApp.enums.RequestStatus;
+import com.example.carBuyingApp.dto.CustomerRequestUpdateDto;
 import com.example.carBuyingApp.service.CustomerRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,12 +25,12 @@ public class CustomerRequestController {
     public ResponseEntity<Page<CustomerRequestResponseDto>> listRequestsByStatus(@RequestParam String status,
                                                                                  @RequestParam int page,
                                                                                  @RequestParam int size) {
-        RequestStatus requestStatus = RequestStatus.valueOf(status);
-        return ResponseEntity.ok(customerRequestService.getCustomerRequestsByStatus(requestStatus, page, size));
+        return ResponseEntity.ok(customerRequestService.getCustomerRequestsByStatus(status, page, size));
     }
 
-    @PutMapping
-    public ResponseEntity<CustomerRequestResponseDto> updateRequestStatus(@RequestBody CustomerRequestStatusUpdateDto statusUpdateDto) {
-        return ResponseEntity.ok(customerRequestService.updateCustomerRequestStatus(statusUpdateDto));
+    @PatchMapping("/{requestId}")
+    public ResponseEntity<CustomerRequestResponseDto> updateRequestStatus(@PathVariable Long requestId,
+                                                                          @RequestBody CustomerRequestUpdateDto statusUpdateDto) {
+        return ResponseEntity.ok(customerRequestService.updateCustomerRequestStatus(requestId, statusUpdateDto));
     }
 }

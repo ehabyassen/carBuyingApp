@@ -2,6 +2,8 @@
 
 A lightweight backend service for managing customer car-buying requests and supplier offers, built with Spring Boot, H2, Flyway, JPA, and MapStruct.
 
+---
+
 🚀 Quick Start
 Requirements
 
@@ -9,11 +11,15 @@ Java 17+
 
 Maven 3.8+
 
+---
+
 Build
 mvn clean install
 
 Run
 mvn spring-boot:run
+
+---
 
 H2 Console
 http://localhost:8080/h2-console
@@ -21,14 +27,17 @@ JDBC URL: jdbc:h2:mem:car_app_db
 User: sa
 Password: (empty)
 
+---
+
 📌 API Endpoints
 Customer Requests
+
+---
 
 Base Path: /api/requests
 
 ➤ Create a Request
 POST /api/requests
-
 
 Body
 
@@ -39,18 +48,18 @@ Body
 }
 
 ➤ List Requests (filter by status + pagination)
-GET /api/requests?status=Active&page=0&size=10
+GET /api/requests?status=ACTIVE&page=0&size=10
 
 ➤ Update Request Status
-PUT /api/requests
-
+PATCH /api/requests/1
 
 Body
 
 {
-"requestId": 1,
 "status": "Closed"
 }
+
+---
 
 Supplier Offers
 
@@ -59,11 +68,10 @@ Base Path: /api/offers
 ➤ Submit Offer
 POST /api/offers
 
-
 Body
 
 {
-"supplierId": 200,
+"supplierId": 205,
 "requestId": 1,
 "price": 350000,
 "carDetails": "Good condition, 80k km"
@@ -73,7 +81,9 @@ Body
 GET /api/offers/by-request/1
 
 ➤ List Offers by Supplier
-GET /api/offers/by-supplier/200
+GET /api/offers/by-supplier/205
+
+---
 
 🗄️ Database & Migrations
 
@@ -86,6 +96,8 @@ V1__create_car_buying_app_tables.sql – schema & indexes
 
 V2__seed_data.sql – demo data
 
+---
+
 ⚙️ Configuration Overview (application.properties)
 
 H2 in-memory database
@@ -95,6 +107,8 @@ Flyway schema migrations enabled
 Hibernate auto-DDL disabled (ddl-auto=none)
 
 SQL logging enabled
+
+---
 
 🧱 Tech Stack
 
@@ -110,11 +124,14 @@ MapStruct
 
 Java 17
 
+---
+
 📁 Project Structure
 controller/
 service/
 repository/
 model/
 dto/
+enums/
 mapper/
 adapter/      # Inspection adapters

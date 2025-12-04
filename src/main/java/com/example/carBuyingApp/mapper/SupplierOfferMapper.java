@@ -18,7 +18,13 @@ public interface SupplierOfferMapper {
     SupplierOffer fromCreateDto(SupplierOfferCreateDto dto);
 
     @Mapping(target = "requestId", source = "customerRequest.id")
-    @Mapping(target = "createdAt", expression = "java(entity.getCreatedAt().toString())")
-    @Mapping(target = "updatedAt", expression = "java(entity.getUpdatedAt().toString())")
+    @Mapping(
+            target = "createdAt",
+            expression = "java(entity.getCreatedAt() == null ? null : entity.getCreatedAt().toString())"
+    )
+    @Mapping(
+            target = "updatedAt",
+            expression = "java(entity.getUpdatedAt() == null ? null : entity.getUpdatedAt().toString())"
+    )
     SupplierOfferResponseDto toResponseDto(SupplierOffer entity);
 }
